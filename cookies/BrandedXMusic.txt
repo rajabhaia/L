@@ -1,0 +1,79 @@
+# Netscape HTTP Cookie File
+# https://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file! Do not edit.
+
+.instagram.com	TRUE	/	TRUE	1784996926	csrftoken	zgJPtMcUrFXcMLtEaJV53keqU6LnsEo1
+.instagram.com	TRUE	/	TRUE	1784996787	datr	s4tVaEWU-Uij2UP0qvolVH_L
+.instagram.com	TRUE	/	TRUE	1781972787	ig_did	B9216BCD-C8D1-46F3-985D-6A3AE8BF61E8
+.instagram.com	TRUE	/	TRUE	1751041709	wd	360x691
+.instagram.com	TRUE	/	TRUE	1751041702	dpr	3
+.instagram.com	TRUE	/	TRUE	1784996803	mid	aFWLswABAAEJ1Vjoe-AiUeCMG5p9
+.instagram.com	TRUE	/	TRUE	1758212926	ds_user_id	11691311276
+.instagram.com	TRUE	/	TRUE	1781972902	sessionid	11691311276%3AkGJZDom2jCglw6%3A24%3AAYcH7fgP2McaAzqOLTVyuwL1_IsBzVvSjARolrkb6w
+.instagram.com	TRUE	/	TRUE	0	rur	"HIL\05411691311276\0541781972926:01fe08c66d9ee807f6a13dd1b8e572f2f1bc415bfe2d37d6b3b94b96ef402fc051145fdd"
+
+
+# Netscape HTTP Cookie File
+# https://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file! Do not edit.
+
+.facebook.com	TRUE	/	TRUE	1784997114	datr	-oxVaJfZBRqE5P4giPsgLbns
+.facebook.com	TRUE	/	TRUE	1758213317	fr	0p4zOTgdPdoIefwHn.AWdazHchrwio2Bg_6m6DtaJJfH6kIjsTXRP4Kk2SI0HCRBZQ98g.BoVYz6..AAA.0.0.BoVY3F.AWfHnR0Ur7L3LhZOZc_ufbA1fUg
+.facebook.com	TRUE	/	TRUE	1784997313	sb	-oxVaEqKegPbn2gkE3VdUviE
+.facebook.com	TRUE	/	TRUE	0	m_pixel_ratio	1
+.facebook.com	TRUE	/	TRUE	0	wd	360x800
+.facebook.com	TRUE	/	TRUE	1781973313	c_user	100029701282626
+.facebook.com	TRUE	/	TRUE	1781973313	xs	47%3AANcspSlZ8VJKCw%3A2%3A1750437311%3A-1%3A-1
+.facebook.com	TRUE	/	TRUE	1751042117	locale	en_GB
+.facebook.com	TRUE	/	TRUE	1758213319	wl_cbv	v2%3Bclient_version%3A2848%3Btimestamp%3A1750437318
+.facebook.com	TRUE	/	TRUE	1781973320	fbl_st	100428424%3BT%3A29173955
+.facebook.com	TRUE	/	TRUE	1755621320	vpd	v1%3B691x360x3
+
+
+
+# Netscape HTTP Cookie File
+# https://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file! Do not edit.
+
+.1024terabox.com	TRUE	/	FALSE	1755621532	browserid	WF3m8qstqB1OoSJQS2N8TQDc6C6PGaBldIPHK61yEO1GMbnQjpp4KeRu1wk=
+.1024terabox.com	TRUE	/	FALSE	1753029958	lang	en
+.1024terabox.com	TRUE	/	FALSE	1781973532	TSID	PryTRGZcPFhZh7fo1aw8aGAiZDerXaHd
+.1024terabox.com	TRUE	/	FALSE	1784997958	__bid_n	1978e3518ee19b181a4207
+.1024terabox.com	TRUE	/	FALSE	0	ab_sr	1.0.1_ZTZjNGI2YzIyNmI3MWFjZWEwOWUyMTYxY2FjYjQ4OTkxNzg2ZmI2NDZkNDkzMDY2MmJhZTM0MjYzM2Y4NzkzYjQ3YmJmMTBiNGMzZjQ1NDQ5MjE5YjY3MWM5OWY3Y2Q1ZDBkYTM4YTg5MTQ5NmMyYzRiOTZhZGJjYjc4YTc2Yjk1MzNhMmViNTMwMzdhYzZiM2EzOGNkNTY2NTFmYmEwMA==
+.1024terabox.com	TRUE	/	TRUE	1781973954	ndus	Yehotd1peHui6cKjsscBxWTIWQLIqTYmqz-v-MFC
+dm.1024terabox.com	FALSE	/	FALSE	0	csrfToken	XKkcIXXpb3ee4a8ZBfVwxbHG
+dm.1024terabox.com	FALSE	/	FALSE	1753029959	ndut_fmt	B969865916DDDF06C66E8B5B5EB4C78ADA9D15D6E4D8CB93C0866748A6741E5B
+.dm.1024terabox.com	TRUE	/	TRUE	1781973970	__stripe_mid	02b83d1d-204f-43d9-9de7-0cc501435d0646d682
+.dm.1024terabox.com	TRUE	/	TRUE	1750439770	__stripe_sid	c165d577-6e26-4ea1-8743-da2b6596ee6302709c
+dm.1024terabox.com	FALSE	/	FALSE	1753029973	lang	en
+
+
+
+# Netscape HTTP Cookie File
+# https://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file! Do not edit.
+
+.youtube.com	TRUE	/	TRUE	1748409640	GPS	1
+.youtube.com	TRUE	/	TRUE	0	YSC	7dbcQppXGzQ
+.youtube.com	TRUE	/	TRUE	1763959912	__Secure-ROLLOUT_TOKEN	COuIy9-P7oLz0QEQ9c6z4q7FjQMY5PSfhK_FjQM%3D
+.youtube.com	TRUE	/	TRUE	1763959998	VISITOR_INFO1_LIVE	_pfbsNhJrEo
+.youtube.com	TRUE	/	TRUE	1763959998	VISITOR_PRIVACY_METADATA	CgJJThIEGgAgJw%3D%3D
+.youtube.com	TRUE	/	TRUE	1782967999	PREF	f6=40000000&tz=Asia.Kolkata
+.youtube.com	TRUE	/	TRUE	1779943910	__Secure-1PSIDTS	sidts-CjIB5H03P0KdW41J0AJeZR8SUjqGNxRBBVkrlAMXny217Vw8Qt4dNvZqmHSjyJI8DjnnDxAA
+.youtube.com	TRUE	/	TRUE	1779943910	__Secure-3PSIDTS	sidts-CjIB5H03P0KdW41J0AJeZR8SUjqGNxRBBVkrlAMXny217Vw8Qt4dNvZqmHSjyJI8DjnnDxAA
+.youtube.com	TRUE	/	FALSE	1782967912	HSID	AvslVImvoZw5kdXZU
+.youtube.com	TRUE	/	TRUE	1782967912	SSID	AquW9-psiScaprmZm
+.youtube.com	TRUE	/	FALSE	1782967912	APISID	og8oegVbrS1e4ak4/ASeesP2bfWmFtF1Fn
+.youtube.com	TRUE	/	TRUE	1782967912	SAPISID	8r-4nDIsO3Q4z_Lw/APEyziKY-qZJWOU4L
+.youtube.com	TRUE	/	TRUE	1782967912	__Secure-1PAPISID	8r-4nDIsO3Q4z_Lw/APEyziKY-qZJWOU4L
+.youtube.com	TRUE	/	TRUE	1782967912	__Secure-3PAPISID	8r-4nDIsO3Q4z_Lw/APEyziKY-qZJWOU4L
+.youtube.com	TRUE	/	FALSE	1782967912	SID	g.a000xQggjZUKe3L0LooptecO0j5AA03hgbRqO3DHNrxwdpKKEJqn9TSG_oWYebtW-R6KPRj28QACgYKAYISARYSFQHGX2Mi_XBcup_pw3mdwTV1JRf4JBoVAUF8yKrOxbCCEdZg_Na63vbXfkJQ0076
+.youtube.com	TRUE	/	TRUE	1782967912	__Secure-1PSID	g.a000xQggjZUKe3L0LooptecO0j5AA03hgbRqO3DHNrxwdpKKEJqnQQaTR07tV5Am4h1sJxzf2QACgYKAfISARYSFQHGX2MiHIF2sDq6YJ2uKNXYr8AcLRoVAUF8yKr7nFdO92X00fgQh8mdobJd0076
+.youtube.com	TRUE	/	TRUE	1782967912	__Secure-3PSID	g.a000xQggjZUKe3L0LooptecO0j5AA03hgbRqO3DHNrxwdpKKEJqnIVjPfgxh4ggC10SvOs4PfQACgYKARMSARYSFQHGX2MiyBRX8mrw44UGfwnEH1Qh7RoVAUF8yKqU-qOjiIm1FIg0Gpa4oh9R0076
+.youtube.com	TRUE	/	FALSE	1779944001	SIDCC	AKEyXzVcwDiN0f6mQ-s2B0_k84D_hoG4H2y41bq4qvqczmdokM8d79iQT6hvBxDQYy7iTmsb2A
+.youtube.com	TRUE	/	TRUE	1779944001	__Secure-1PSIDCC	AKEyXzUy61xqRB-Wm4sEZEuuGbe8AYfitQ1q_7JQN0HjmJ6a6CQZP2aCiR6MQtkqX-70daOaAg
+.youtube.com	TRUE	/	TRUE	1779944001	__Secure-3PSIDCC	AKEyXzUgF0qgXRVgq1HTTCw7VKTKiJraova85FPx4g2rwA6P6hI_LpoTJwHVvB8T17lY2EsIQg
+.youtube.com	TRUE	/	TRUE	1782967912	LOGIN_INFO	AFmmF2swRAIgFGYW0w_BwtQAnVgpzH21Y_dtFJLe9Hro1GQyxRemrmgCIFdODGuwJLcTi_DzptDW-4oDig1zBL2Fjl8A_qq6Wpd4:QUQ3MjNmelMzeWFtenUwekFkOHZ2V2VhWEhLZ0xpemVkb1dJOFZkeVA3ODhaOWpYalZHREN2eWdxUHhLMUh6TFI3S3JVNHVFOG1rQ0R3UldIeVplOVJEUkVuT3B5MlJKRUZkU3gxdEQxVVlnZzNYMllaU2ZEWHotMDRxcDB3clQybURUakNBVkd2eGhSS2hJMC0xNl9OSHZJank4M29xd01R
+
+
+
