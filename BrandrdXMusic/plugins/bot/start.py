@@ -27,6 +27,8 @@ from strings import get_string
 # █▄▄ █▄█ █░▀█ █▄▄ █ █░▀█ █▄█   █▄▄ █▀█ █▀█ █▀▄ ██▄ █░▀░█
 
 # ✧✧✧ PREMIUM ASSETS ✧✧✧
+# **IMPORTANT**: Verify these sticker file IDs are still valid.
+# If stickers are not showing, re-obtain valid file IDs via @StickerIDbot
 ULTRA_STICKERS = [
     "CAACAgUAAxkBAAEMMtRlqZcq9QABHlK3QZogv6bQeHwz6gAC1gMAAg6ryVcldUr_lhPexzME",  # Animated music note
     "CAACAgUAAxkBAAEMMtZlqZczVXHfD3LJ1J0Jb3QZJgAB2isAAhYJAAJOi_lVvZv3yP4bQHQeBA",  # DJ animation
@@ -56,14 +58,14 @@ async def neon_text_animation(message, text):
     anim = await message.reply_text("✨")
     for gradient in NEON_GRADIENTS:
         await anim.edit_text(f"{gradient}\n{text}\n{gradient[::-1]}")
-        await asyncio.sleep(0.15)
+        await asyncio.sleep(0.35) # Increased from 0.15 for slower animation
     return anim
 
 async def music_visualizer(message):
     anim = await message.reply_text("🎵")
     for i in range(1, 6):
         await anim.edit_text("\n".join(["|"*i*2 for _ in range(3)]))
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(0.25) # Increased from 0.1 for slower animation
     return anim
 
 # █▀ █▀▀ █▀█ █▀▀ █▀▀ █▄░█ █▀ █░█ █▀█ ▀█▀
@@ -75,26 +77,39 @@ async def ultra_start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     
     # ✧ ULTRA REACTION ANIMATION ✧
-    # Ensure these emojis are valid Telegram reactions
-    valid_reactions = ["👍", "❤️", "😂", "🥳", "🤩", "🎉", "🔥", "💯", "🥰"] # Subset of commonly valid reactions
+    valid_reactions = ["👍", "❤️", "😂", "🥳", "🤩", "🎉", "🔥", "💯", "🥰"] 
     
-    # Check if MUSIC_EMOJIS has at least 3 valid reactions before sampling
     if len(valid_reactions) >= 3:
         for emoji in random.sample(valid_reactions, 3):
             try:
                 await message.react(emoji)
-                await asyncio.sleep(0.2)
+                await asyncio.sleep(0.4) # Increased from 0.2 for slower reaction
             except Exception as e:
                 print(f"Failed to react with {emoji}: {e}")
-                # You might want to log this or handle it more gracefully
-                # e.g., fall back to a default reaction or skip if reaction fails
     else:
-        # Fallback if there aren't enough valid reactions
         try:
-            await message.react("👍") # Default reaction
+            await message.react("👍")
         except Exception as e:
             print(f"Failed to react with default 👍: {e}")
 
+    # Logger notification for private start
+    if config.LOGGER_ID:
+        try:
+            await app.send_message(
+                chat_id=config.LOGGER_ID,
+                text=f"""
+╔════════════════════╗
+       🌟 𝐍𝐄𝐖 𝐔𝐒𝐄𝐑 🌟
+╠════════════════════╣
+👤 𝐔𝐬𝐞𝐫: {message.from_user.mention}
+🆔 𝐈𝐃: <code>{message.from_user.id}</code>
+📛 𝐔𝐧: @{message.from_user.username}
+⏰ 𝐓𝐢𝐦𝐞: {time.strftime('%X')}
+╚════════════════════╝
+                """
+            )
+        except Exception as e:
+            print(f"Failed to send start notification to LOGGER_ID: {e}")
 
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
@@ -102,11 +117,15 @@ async def ultra_start_pm(client, message: Message, _):
             # ✧ HELP COMMAND ANIMATION ✧
             keyboard = help_pannel(_)
             anim = await neon_text_animation(message, "𝐇𝐄𝐋𝐏 𝐂𝐄𝐍𝐓𝐄𝐑")
-            await message.reply_sticker(random.choice(ULTRA_STICKERS))
+            
+            try:
+                await message.reply_sticker(random.choice(ULTRA_STICKERS))
+            except Exception as e:
+                print(f"Failed to send sticker for help command: {e}")
             
             for i in range(0, 101, 10):
                 await anim.edit_text(f"✨ 𝐋𝐨𝐚𝐝𝐢𝐧𝐠 𝐇𝐞𝐥𝐩 𝐌𝐞𝐧𝐮 ✨\n{generate_loading_bar(i)} {i}%")
-                await asyncio.sleep(0.1)
+                await asyncio.sleep(0.2) # Increased from 0.1 for slower loading bar
             
             await anim.delete()
             return await message.reply_photo(
@@ -118,10 +137,10 @@ async def ultra_start_pm(client, message: Message, _):
         if name[0:3] == "sud":
             # ✧ SUDO ACCESS ANIMATION ✧
             anim = await message.reply_text("🔐")
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(0.8) # Increased from 0.5
             for i in range(3):
                 await anim.edit_text("🔐" + "•"*(i+1))
-                await asyncio.sleep(0.3)
+                await asyncio.sleep(0.5) # Increased from 0.3
             
             await sudoers_list(client=client, message=message, _=_)
             if await is_on_off(2):
@@ -159,7 +178,10 @@ async def ultra_start_pm(client, message: Message, _):
                 published = result["publishedTime"]
             
             await anim.delete()
-            await message.reply_sticker(random.choice(ULTRA_STICKERS))
+            try:
+                await message.reply_sticker(random.choice(ULTRA_STICKERS))
+            except Exception as e:
+                print(f"Failed to send sticker for track info: {e}")
             
             return await app.send_photo(
                 chat_id=message.chat.id,
@@ -186,7 +208,11 @@ async def ultra_start_pm(client, message: Message, _):
             
             # ✧ ULTRA WELCOME SEQUENCE ✧
             anim = await neon_text_animation(message, "𝐖𝐄𝐋𝐂𝐎𝐌𝐄")
-            await message.reply_sticker(random.choice(ULTRA_STICKERS))
+            
+            try:
+                await message.reply_sticker(random.choice(ULTRA_STICKERS))
+            except Exception as e:
+                print(f"Failed to send sticker for welcome sequence: {e}")
             
             welcome_phrases = [
                 f"✨ 𝐇𝐞𝐲 𝐁𝐚𝐛𝐲 {message.from_user.mention}",
@@ -203,7 +229,7 @@ async def ultra_start_pm(client, message: Message, _):
                     f"{generate_loading_bar(progress)} {progress}%\n"
                     f"{NEON_GRADIENTS[i%4][::-1]}"
                 )
-                await asyncio.sleep(0.5)
+                await asyncio.sleep(0.8) # Increased from 0.5 for slower welcome phrases
             
             # ✧ MUSIC SYSTEM BOOT ANIMATION ✧
             boot_steps = [
@@ -215,15 +241,12 @@ async def ultra_start_pm(client, message: Message, _):
             ]
             
             for step in boot_steps:
-                # Ensure the emoji chosen for the boot animation is a valid reaction or a simple string
-                # Since this is edit_text, it doesn't need to be a reaction emoji.
-                # Using a generic music emoji or a simple symbol here.
                 await anim.edit_text(
                     f"╔════════════════════╗\n"
-                    f"       🎶 {step}\n"  # Changed from random.choice(MUSIC_EMOJIS) to a fixed 🎶
+                    f"       🎶 {step}\n"
                     f"╚════════════════════╝"
                 )
-                await asyncio.sleep(0.7)
+                await asyncio.sleep(1.0) # Increased from 0.7 for slower boot steps
             
             # Get user profile or default image
             userss_photo = None
@@ -238,7 +261,7 @@ async def ultra_start_pm(client, message: Message, _):
             chat_photo = userss_photo if userss_photo else config.START_IMG_URL
 
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"Error during private start sequence: {e}")
             chat_photo = config.START_IMG_URL
 
         await anim.delete()
@@ -263,21 +286,6 @@ async def ultra_start_pm(client, message: Message, _):
             """,
             reply_markup=InlineKeyboardMarkup(out),
         )
-        
-        if await is_on_off(config.LOG):
-            return await app.send_message(
-                config.LOG_GROUP_ID,
-                f"""
-╔════════════════════╗
-       🌟 𝐍𝐄𝐖 𝐔𝐒𝐄𝐑 🌟
-╠════════════════════╣
-👤 𝐔𝐬𝐞𝐫: {message.from_user.mention}
-🆔 𝐈𝐃: <code>{message.from_user.id}</code>
-📛 𝐔𝐧: @{message.from_user.username}
-⏰ 𝐓𝐢𝐦𝐞: {time.strftime('%X')}
-╚════════════════════╝
-                """,
-            )
 
 # █▀▀ █▀█ █▄░█ █▀▀   █▄▀ █▀▀ █▄█ █▄▄ █▀▀ █▀█
 # █▄▄ █▄█ █░▀█ █▄▄   █░█ ██▄ ░█░ █▄█ ██▄ █▀▄
@@ -292,10 +300,10 @@ async def ultra_start_gp(client, message: Message, _):
     anim = await message.reply_text("🚀")
     for i in range(5):
         await anim.edit_text("🚀" + "•"*(i+1) + " "*(4-i) + f"{20*(i+1)}%")
-        await asyncio.sleep(0.3)
+        await asyncio.sleep(0.5) # Increased from 0.3
     
     await anim.edit_text("🎸 𝐑𝐞𝐚𝐝𝐲 𝐓𝐨 𝐏𝐥𝐚𝐲!")
-    await asyncio.sleep(0.5)
+    await asyncio.sleep(0.8) # Increased from 0.5
     await anim.delete()
     
     await message.reply_photo(
@@ -347,10 +355,13 @@ async def ultra_welcome(client, message: Message):
                 anim = await message.reply_text("🎵")
                 for i in range(1, 6):
                     await anim.edit_text("\n".join(["🎵" + "•"*i*2 + "🎶" for _ in range(3)]))
-                    await asyncio.sleep(0.2)
+                    await asyncio.sleep(0.3) # Increased from 0.2
                 
                 await anim.delete()
-                await message.reply_sticker(random.choice(ULTRA_STICKERS))
+                try:
+                    await message.reply_sticker(random.choice(ULTRA_STICKERS))
+                except Exception as e:
+                    print(f"Failed to send sticker for group welcome: {e}")
                 
                 await message.reply_photo(
                     photo=config.START_IMG_URL,
@@ -373,4 +384,4 @@ async def ultra_welcome(client, message: Message):
                 await add_served_chat(message.chat.id)
                 await message.stop_propagation()
         except Exception as ex:
-            print(ex)
+            print(f"Error in new_chat_members handler: {ex}")
