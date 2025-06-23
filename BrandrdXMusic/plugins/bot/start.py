@@ -3,7 +3,6 @@ import asyncio
 from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-from youtubesearchpython.__future__ import VideosSearch
 
 import config
 from BrandrdXMusic import app
@@ -23,16 +22,25 @@ from BrandrdXMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
+# --- NEW STICKER FILE IDS ---
+# Replace these with your desired sticker file IDs
+WELCOME_STICKER_1 = "CAACAgUAAxkBAAEQI1RlTLnRAy4h9lOS6jgS5FYsQoruOAAC1gMAAg6ryVcldUr_lhPexzME" # Example existing, replace with yours
+WELCOME_STICKER_2 = "CAACAgUAAxkBAAKktGhZgVvKBcruKFO1vrlyJyJ92u0BAAIPCQACSErxVkH9JWQPmfaoHgQ" # Placeholder, replace with actual
+STARTING_STICKER_1 = "CAACAgUAAxkBAAKkw2hZgbt8t_FQU38s_k_8RZR3gsIiAAINFgAC0QyQVrqrLQzU13foHgQ" # Example existing, replace with yours
+STARTING_STICKER_2 = "CAACAgUAAxkBAAKkyGhZghOqGIGtgP5HkY1Nyk_vfugyAAJ5CgACQgZwVTVo2eQqCh15HgQ" # Placeholder, replace with actual
+
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-    await message.react("❤")
+    # Changed reaction to something more dynamic
+    await message.react("✨") 
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            await message.reply_sticker("CAACAgUAAxkBAAEQI1RlTLnRAy4h9lOS6jgS5FYsQoruOAAC1gMAAg6ryVcldUr_lhPexzME")
+            # Changed sticker to a new one for help
+            await message.reply_sticker(WELCOME_STICKER_2) 
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
@@ -49,7 +57,10 @@ async def start_pm(client, message: Message, _):
         if name[0:3] == "inf":
             m = await message.reply_text("🔎")
             query = (str(name)).replace("info_", "", 1)
-            query = f"https://www.youtube.com/watch?v={query}"
+            query = f"[https://www.youtube.com/watch?v=](https://www.youtube.com/watch?v=){query}"
+            # This part uses `VideosSearch` which is not directly available here.
+            # Assuming `VideosSearch` works as intended based on the original code.
+            from youtubesearchpython.__future__ import VideosSearch # Ensure this import is available if not global
             results = VideosSearch(query, limit=1)
             for result in (await results.next())["result"]:
                 title = result["title"]
@@ -84,53 +95,61 @@ async def start_pm(client, message: Message, _):
                     text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
     else:
-
         try:
             out = private_panel(_)
-            lol = await message.reply_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ︎ {}.. ❣️".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🥳".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💥".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🤩".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💌".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💞".format(message.from_user.mention))
-               
-            await lol.delete()
-            lols = await message.reply_text("**⚡️ѕ**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("⚡ѕт")        
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтα**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαя**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαят**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятι**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιи**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg.**")
+            
+            # --- Enhanced Welcome Animation ---
+            welcome_messages = [
+                "💫 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ︎ {}.. ❣️",
+                "✨ 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🥳",
+                "🎉 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💥",
+                "🌟 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🤩",
+                "💖 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💌",
+                "💞 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🥰",
+                "🎶 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. Enjoy!",
+            ]
+            
+            # Send initial welcome message and animate
+            lol = await message.reply_text(welcome_messages[0].format(message.from_user.mention))
+            for i in range(1, len(welcome_messages)):
+                await asyncio.sleep(0.3) # Slower animation for better readability
+                await lol.edit_text(welcome_messages[i].format(message.from_user.mention))
+            
+            await asyncio.sleep(0.5) # Pause before starting animation
+            await lol.delete() # Delete the animated welcome message
 
-            await lols.edit_text("**⚡ѕтαятιиg....**")
+            # --- Dynamic Starting Text Animation ---
+            starting_messages = [
+                "⚡️ѕ", "⚡️ѕт", "⚡️ѕтα", "⚡️ѕтαя", "⚡️ѕтαят", "⚡️ѕтαятι", "⚡️ѕтαятιи", "⚡️ѕтαятιиg",
+                "⚡️ѕтαятιиg.", "⚡️ѕтαятιиg..", "⚡️ѕтαятιиg...", "⚡️ѕтαятιиg....",
+                "🎵 𝙻𝚘𝚊𝚍𝚒𝚗𝚐 𝙿𝚕𝚊𝚢𝚕𝚒𝚜𝚝𝚜...", "🚀 𝙱𝚘𝚘𝚝𝚒𝚗𝚐 𝚂𝚢𝚜𝚝𝚎𝚖𝚜...", "✅ 𝚁𝚎𝚊𝚍𝚢 𝚝𝚘 𝚁𝚘𝚌𝚔!"
+            ]
+            
+            lols = await message.reply_text(starting_messages[0])
+            for i in range(1, len(starting_messages)):
+                await asyncio.sleep(0.15) # Slightly slower for more impact
+                await lols.edit_text(starting_messages[i])
 
-            await lols.edit_text("**⚡ѕтαятιиg.**")
-            await lols.edit_text("**⚡ѕтαятιиg....**")
-            m = await message.reply_sticker("CAACAgUAAxkBAAEQI1BlTLmx7PtOO3aPNshEU2gCy7iAFgACNQUAApqMuVeA6eJ50VbvmDME")
+            await asyncio.sleep(0.5) # Pause after starting animation
+
+            # --- Changed Sticker for starting animation ---
+            m = await message.reply_sticker(STARTING_STICKER_2) # Using the new sticker ID
+            
+            userss_photo = None
             if message.chat.photo:
-
-                userss_photo = await app.download_media(
-                    message.chat.photo.big_file_id,
-                )
-            else:
-                userss_photo = "assets/nodp.png"
-            if userss_photo:
-                chat_photo = userss_photo
-            chat_photo = userss_photo if userss_photo else START_IMG_URL
+                try:
+                    userss_photo = await app.download_media(
+                        message.chat.photo.big_file_id,
+                    )
+                except Exception as e:
+                    print(f"Error downloading chat photo: {e}")
+                    userss_photo = None # Fallback if download fails
+            
+            chat_photo = userss_photo if userss_photo else config.START_IMG_URL # Use config.START_IMG_URL for global default
 
         except AttributeError:
-            chat_photo = "assets/nodp.png"
+            chat_photo = config.START_IMG_URL # Ensure it falls back to the configured URL
+
         await lols.delete()
         await m.delete()
         await message.reply_photo(
@@ -178,7 +197,7 @@ async def welcome(client, message: Message):
                     await message.reply_text(
                         _["start_5"].format(
                             app.mention,
-                            f"https://t.me/{app.username}?start=sudolist",
+                            f"[https://t.me/](https://t.me/){app.username}?start=sudolist",
                             config.SUPPORT_CHAT,
                         ),
                         disable_web_page_preview=True,
@@ -200,3 +219,10 @@ async def welcome(client, message: Message):
                 await message.stop_propagation()
         except Exception as ex:
             print(ex)
+
+
+
+
+
+
+
