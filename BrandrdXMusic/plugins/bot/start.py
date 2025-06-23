@@ -27,30 +27,19 @@ from strings import get_string
 # █▄▄ █▄█ █░▀█ █▄▄ █ █░▀█ █▄█   █▄▄ █▀█ █▀█ █▀▄ ██▄ █░▀░█
 
 # ✧✧✧ PREMIUM ASSETS ✧✧✧
-# **IMPORTANT**: Verify these sticker file IDs are still valid.
-# If stickers are not showing, re-obtain valid file IDs via @StickerIDbot
-# The current provided IDs are causing MEDIA_EMPTY error. You need to replace them with working ones.
-# Example of a valid animated sticker ID (replace with your own verified ones):
-# To get a sticker ID: Send the sticker to your bot in a private chat. Then forward that message to @StickerIDbot (or similar) to get its file ID.
 ULTRA_STICKERS = [
-    "CAACAgEAAxkBAAEkK1ZmH4t3jXg3D0h-jG2l7j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ", # Example: Replace with your actual working sticker ID
-    "CAACAgEAAxkBAAEkK15mH4uHlXg-9o-1X2t3j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ", # Example: Replace with your actual working sticker ID
-    "CAACAgEAAxkBAAEkK2NmH4vJk-7C2o-2X2t3j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ", # Example: Replace with your actual working sticker ID
-    "CAACAgEAAxkBAAEkK2VmH4wuG-7D1p-3X2t3j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ"  # Example: Replace with your actual working sticker ID
+    "CAACAgUAAxkBAAKktGhZgVvKBcruKFO1vrlyJyJ92u0BAAIPCQACSErxVkH9JWQPmfaoHgQ",
+    "CAACAgUAAxkBAAKkw2hZgbt8t_FQU38s_k_8RZR3gsIiAAINFgAC0QyQVrqrLQzU13foHgQ",
+    "CAACAgUAAxkBAAKkyGhZghOqGIGtgP5HkY1Nyk_vfugyAAJ5CgACQgZwVTVo2eQqCh15HgQ",
+    "CAACAgEAAxkBAAEkK2VmH4wuG-7D1p-3X2t3j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ"
 ]
 
 NEON_GRADIENTS = [
-    "🟣🔵🟢🟡🟠🔴",
-    "🔴🟠🟡🟢🔵🟣",
     "✨🌟💫🔥🎶⚡️",
     "⚡️🎶🔥💫🌟✨"
 ]
 
-# Updated MUSIC_EMOJIS with commonly supported Telegram reactions
-# Removed emojis that might cause REACTION_INVALID errors.
-# A comprehensive list of supported reactions can be found in Telegram's API documentation or by testing
 MUSIC_EMOJIS = ["👍", "❤️", "😂", "🥳", "🙏", "🤩", "🎉", "🔥", "💯", "🥰", "👏", "😁"]
-
 
 # ✧✧✧ ANIMATION SEQUENCES ✧✧✧
 def generate_loading_bar(progress):
@@ -62,14 +51,14 @@ async def neon_text_animation(message, text):
     anim = await message.reply_text("✨")
     for gradient in NEON_GRADIENTS:
         await anim.edit_text(f"{gradient}\n{text}\n{gradient[::-1]}")
-        await asyncio.sleep(0.35) # Increased from 0.15 for slower animation
+        await asyncio.sleep(0.35)
     return anim
 
 async def music_visualizer(message):
     anim = await message.reply_text("🎵")
     for i in range(1, 6):
         await anim.edit_text("\n".join(["|"*i*2 for _ in range(3)]))
-        await asyncio.sleep(0.25) # Increased from 0.1 for slower animation
+        await asyncio.sleep(0.25)
     return anim
 
 # █▀ █▀▀ █▀█ █▀▀ █▀▀ █▄░█ █▀ █░█ █▀█ ▀█▀
@@ -80,24 +69,24 @@ async def music_visualizer(message):
 async def ultra_start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     
+    # ✧ FIRST WELCOME STICKER ✧
+    try:
+        await message.reply_sticker(random.choice(ULTRA_STICKERS))
+    except Exception as e:
+        print(f"Failed to send welcome sticker: {e}")
+    
     # ✧ ULTRA REACTION ANIMATION ✧
-    # Using a predefined list of commonly valid reactions
-    valid_reactions = ["👍", "❤️", "😂", "🥳", "🤩", "🎉", "🔥", "💯", "🥰"] 
+    valid_reactions = ["👍", "❤️", "🔥", "🎉", "👏"]
     
     if len(valid_reactions) >= 3:
         for emoji in random.sample(valid_reactions, 3):
             try:
                 await message.react(emoji)
-                await asyncio.sleep(0.4) # Increased from 0.2 for slower reaction
+                await asyncio.sleep(0.4)
             except Exception as e:
-                print(f"Failed to react with {emoji}: {e}") # Print the error for debugging
-    else:
-        try:
-            await message.react("👍")
-        except Exception as e:
-            print(f"Failed to react with default 👍: {e}") # Print the error for debugging
+                print(f"Failed to react with {emoji}: {e}")
 
-    # Logger notification for private start
+    # Logger notification
     if config.LOGGER_ID:
         try:
             await app.send_message(
@@ -119,7 +108,6 @@ async def ultra_start_pm(client, message: Message, _):
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
-            # ✧ HELP COMMAND ANIMATION ✧
             keyboard = help_pannel(_)
             anim = await neon_text_animation(message, "𝐇𝐄𝐋𝐏 𝐂𝐄𝐍𝐓𝐄𝐑")
             
@@ -130,7 +118,7 @@ async def ultra_start_pm(client, message: Message, _):
             
             for i in range(0, 101, 10):
                 await anim.edit_text(f"✨ 𝐋𝐨𝐚𝐝𝐢𝐧𝐠 𝐇𝐞𝐥𝐩 𝐌𝐞𝐧𝐮 ✨\n{generate_loading_bar(i)} {i}%")
-                await asyncio.sleep(0.2) # Increased from 0.1 for slower loading bar
+                await asyncio.sleep(0.2)
             
             await anim.delete()
             return await message.reply_photo(
@@ -140,12 +128,11 @@ async def ultra_start_pm(client, message: Message, _):
             )
             
         if name[0:3] == "sud":
-            # ✧ SUDO ACCESS ANIMATION ✧
             anim = await message.reply_text("🔐")
-            await asyncio.sleep(0.8) # Increased from 0.5
+            await asyncio.sleep(0.8)
             for i in range(3):
                 await anim.edit_text("🔐" + "•"*(i+1))
-                await asyncio.sleep(0.5) # Increased from 0.3
+                await asyncio.sleep(0.5)
             
             await sudoers_list(client=client, message=message, _=_)
             if await is_on_off(2):
@@ -165,7 +152,6 @@ async def ultra_start_pm(client, message: Message, _):
             return
             
         if name[0:3] == "inf":
-            # ✧ TRACK INFO ANIMATION ✧
             anim = await music_visualizer(message)
             query = (str(name)).replace("info_", "", 1)
             query = f"[https://www.youtube.com/watch?v=](https://www.youtube.com/watch?v=){query}"
@@ -211,13 +197,8 @@ async def ultra_start_pm(client, message: Message, _):
         try:
             out = private_panel(_)
             
-            # ✧ ULTRA WELCOME SEQUENCE ✧
+            # ✧ WELCOME ANIMATION ✧
             anim = await neon_text_animation(message, "𝐖𝐄𝐋𝐂𝐎𝐌𝐄")
-            
-            try:
-                await message.reply_sticker(random.choice(ULTRA_STICKERS))
-            except Exception as e:
-                print(f"Failed to send sticker for welcome sequence: {e}")
             
             welcome_phrases = [
                 f"✨ 𝐇𝐞𝐲 𝐁𝐚𝐛𝐲 {message.from_user.mention}",
@@ -234,9 +215,9 @@ async def ultra_start_pm(client, message: Message, _):
                     f"{generate_loading_bar(progress)} {progress}%\n"
                     f"{NEON_GRADIENTS[i%4][::-1]}"
                 )
-                await asyncio.sleep(0.8) # Increased from 0.5 for slower welcome phrases
+                await asyncio.sleep(0.8)
             
-            # ✧ MUSIC SYSTEM BOOT ANIMATION ✧
+            # ✧ BOOT ANIMATION ✧
             boot_steps = [
                 "⚡️ 𝐈𝐧𝐢𝐭𝐢𝐚𝐥𝐢𝐳𝐢𝐧𝐠 𝐒𝐲𝐬𝐭𝐞𝐦...",
                 "🎛️ 𝐋𝐨𝐚𝐝𝐢𝐧𝐠 𝐀𝐮𝐝𝐢𝐨 𝐌𝐨𝐝𝐮𝐥𝐞𝐬...",
@@ -251,16 +232,15 @@ async def ultra_start_pm(client, message: Message, _):
                     f"       🎶 {step}\n"
                     f"╚════════════════════╝"
                 )
-                await asyncio.sleep(1.0) # Increased from 0.7 for slower boot steps
+                await asyncio.sleep(1.0)
             
-            # Get user profile or default image
             userss_photo = None
             if message.chat.photo:
                 try:
                     userss_photo = await app.download_media(
                         message.chat.photo.big_file_id,
                     )
-                except Exception as e: # Catch error during media download
+                except Exception as e:
                     print(f"Error downloading user photo: {e}")
                     userss_photo = None
             
@@ -272,7 +252,13 @@ async def ultra_start_pm(client, message: Message, _):
 
         await anim.delete()
         
-        # ✧ ULTRA FINAL MESSAGE ✧
+        # ✧ FINAL GOODBYE STICKER ✧
+        try:
+            await message.reply_sticker(random.choice(ULTRA_STICKERS))
+        except Exception as e:
+            print(f"Failed to send goodbye sticker: {e}")
+        
+        # ✧ FINAL MESSAGE ✧
         await message.reply_photo(
             photo=chat_photo,
             caption=f"""
@@ -302,15 +288,27 @@ async def ultra_start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
     
+    # ✧ FIRST GROUP STICKER ✧
+    try:
+        await message.reply_sticker(random.choice(ULTRA_STICKERS))
+    except Exception as e:
+        print(f"Failed to send group welcome sticker: {e}")
+    
     # ✧ GROUP START ANIMATION ✧
     anim = await message.reply_text("🚀")
     for i in range(5):
         await anim.edit_text("🚀" + "•"*(i+1) + " "*(4-i) + f"{20*(i+1)}%")
-        await asyncio.sleep(0.5) # Increased from 0.3
+        await asyncio.sleep(0.5)
     
     await anim.edit_text("🎸 𝐑𝐞𝐚𝐝𝐲 𝐓𝐨 𝐏𝐥𝐚𝐲!")
-    await asyncio.sleep(0.8) # Increased from 0.5
+    await asyncio.sleep(0.8)
     await anim.delete()
+    
+    # ✧ FINAL GROUP STICKER ✧
+    try:
+        await message.reply_sticker(random.choice(ULTRA_STICKERS))
+    except Exception as e:
+        print(f"Failed to send group goodbye sticker: {e}")
     
     await message.reply_photo(
         photo=config.START_IMG_URL,
@@ -339,7 +337,7 @@ async def ultra_welcome(client, message: Message):
             if await is_banned_user(member.id):
                 try:
                     await message.chat.ban_member(member.id)
-                except Exception as e: # Catch ban error
+                except Exception as e:
                     print(f"Error banning member: {e}")
                     pass
             if member.id == app.id:
@@ -358,17 +356,25 @@ async def ultra_welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
+                # ✧ FIRST WELCOME STICKER ✧
+                try:
+                    await message.reply_sticker(random.choice(ULTRA_STICKERS))
+                except Exception as e:
+                    print(f"Failed to send group welcome sticker: {e}")
+                
                 # ✧ GROUP WELCOME ANIMATION ✧
                 anim = await message.reply_text("🎵")
                 for i in range(1, 6):
                     await anim.edit_text("\n".join(["🎵" + "•"*i*2 + "🎶" for _ in range(3)]))
-                    await asyncio.sleep(0.3) # Increased from 0.2
+                    await asyncio.sleep(0.3)
                 
                 await anim.delete()
+                
+                # ✧ FINAL WELCOME STICKER ✧
                 try:
                     await message.reply_sticker(random.choice(ULTRA_STICKERS))
                 except Exception as e:
-                    print(f"Failed to send sticker for group welcome: {e}")
+                    print(f"Failed to send group goodbye sticker: {e}")
                 
                 await message.reply_photo(
                     photo=config.START_IMG_URL,
