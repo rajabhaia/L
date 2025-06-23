@@ -93,6 +93,7 @@ async def start_pm(client, message: Message, _):
 @LanguageStart
 async def start_grp(client, message: Message, _):
     await add_served_chat(message.chat.id)
+    # Corrected reaction emoji from "" to "🚀"
     await message.react("🚀") # Energetic reaction for group start
     try:
         if await is_banned_user(message.from_user.id):
