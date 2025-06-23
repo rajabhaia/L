@@ -35,7 +35,7 @@ async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     # FIX: Changed `await message.react("")` to a valid emoji.
     # You can choose any single valid emoji here, for example: "❤️", "👍", "✨", "🔥", "🎶"
-    await message.react("♥️") # या अपनी पसंद का कोई और इमोजी चुनें
+    await message.react("🥰") # या अपनी पसंद का कोई और इमोजी चुनें
     
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
