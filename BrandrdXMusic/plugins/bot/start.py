@@ -33,13 +33,14 @@ STARTING_STICKER_2 = "CAACAgUAAxkBAAKkyGhZghOqGIGtgP5HkY1Nyk_vfugyAAJ5CgACQgZwVT
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-    # Changed reaction to something more dynamic
-    await message.react("✨") 
+    # FIX: Changed `await message.react("")` to a valid emoji.
+    # You can choose any single valid emoji here, for example: "❤️", "👍", "✨", "🔥", "🎶"
+    await message.react("♥️") # या अपनी पसंद का कोई और इमोजी चुनें
+    
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            # Changed sticker to a new one for help
             await message.reply_sticker(WELCOME_STICKER_2) 
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
@@ -58,9 +59,7 @@ async def start_pm(client, message: Message, _):
             m = await message.reply_text("🔎")
             query = (str(name)).replace("info_", "", 1)
             query = f"[https://www.youtube.com/watch?v=](https://www.youtube.com/watch?v=){query}"
-            # This part uses `VideosSearch` which is not directly available here.
-            # Assuming `VideosSearch` works as intended based on the original code.
-            from youtubesearchpython.__future__ import VideosSearch # Ensure this import is available if not global
+            from youtubesearchpython.__future__ import VideosSearch
             results = VideosSearch(query, limit=1)
             for result in (await results.next())["result"]:
                 title = result["title"]
@@ -219,10 +218,4 @@ async def welcome(client, message: Message):
                 await message.stop_propagation()
         except Exception as ex:
             print(ex)
-
-
-
-
-
-
 
