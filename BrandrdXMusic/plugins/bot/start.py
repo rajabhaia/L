@@ -28,10 +28,11 @@ from strings import get_string
 
 # ✧✧✧ PREMIUM ASSETS ✧✧✧
 ULTRA_STICKERS = [
-    "CAACAgUAAxkBAAKktGhZgVvKBcruKFO1vrlyJyJ92u0BAAIPCQACSErxVkH9JWQPmfaoHgQ",
+    "CAACAgUAAxkBAAEQI1RlTLnRAy4h9lOS6jgS5FYsQoruOAAC1gMAAg6ryVcldUr_lhPexzME",
     "CAACAgUAAxkBAAKkw2hZgbt8t_FQU38s_k_8RZR3gsIiAAINFgAC0QyQVrqrLQzU13foHgQ",
     "CAACAgUAAxkBAAKkyGhZghOqGIGtgP5HkY1Nyk_vfugyAAJ5CgACQgZwVTVo2eQqCh15HgQ",
-    "CAACAgEAAxkBAAEkK2VmH4wuG-7D1p-3X2t3j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ"
+    "CAACAgEAAxkBAAEkK2VmH4wuG-7D1p-3X2t3j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ",
+    "CAACAgUAAxkBAAEQI1BlTLmx7PtOO3aPNshEU2gCy7iAFgACNQUAApqMuVeA6eJ50VbvmDME"
 ]
 
 NEON_GRADIENTS = [
@@ -58,7 +59,7 @@ async def music_visualizer(message):
     anim = await message.reply_text("🎵")
     for i in range(1, 6):
         await anim.edit_text("\n".join(["|"*i*2 for _ in range(3)]))
-        await asyncio.sleep(0.25)
+        await asyncio.sleep(0.45)
     return anim
 
 # █▀ █▀▀ █▀█ █▀▀ █▀▀ █▄░█ █▀ █░█ █▀█ ▀█▀
@@ -82,7 +83,7 @@ async def ultra_start_pm(client, message: Message, _):
         for emoji in random.sample(valid_reactions, 3):
             try:
                 await message.react(emoji)
-                await asyncio.sleep(0.4)
+                await asyncio.sleep(0.10)
             except Exception as e:
                 print(f"Failed to react with {emoji}: {e}")
 
@@ -118,7 +119,7 @@ async def ultra_start_pm(client, message: Message, _):
             
             for i in range(0, 101, 10):
                 await anim.edit_text(f"✨ 𝐋𝐨𝐚𝐝𝐢𝐧𝐠 𝐇𝐞𝐥𝐩 𝐌𝐞𝐧𝐮 ✨\n{generate_loading_bar(i)} {i}%")
-                await asyncio.sleep(0.2)
+                await asyncio.sleep(0.5)
             
             await anim.delete()
             return await message.reply_photo(
@@ -197,42 +198,52 @@ async def ultra_start_pm(client, message: Message, _):
         try:
             out = private_panel(_)
             
-            # ✧ WELCOME ANIMATION ✧
-            anim = await neon_text_animation(message, "𝐖𝐄𝐋𝐂𝐎𝐌𝐄")
+            # ** 1. Initial Sticker (Already handled at the start of ultra_start_pm) **
             
-            welcome_phrases = [
-                f"✨ 𝐇𝐞𝐲 𝐁𝐚𝐛𝐲 {message.from_user.mention}",
-                f"🌟 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐓𝐨 {app.mention}",
-                f"💫 𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐌𝐮𝐬𝐢𝐜 𝐄𝐱𝐩𝐞𝐫𝐢𝐞𝐧𝐜𝐞",
-                f"🔥 𝐋𝐞𝐭's 𝐑𝐨𝐜𝐤 𝐓𝐡𝐞 𝐂𝐡𝐚𝐭"
-            ]
+            # ** Dynamic Welcome Animation (Modified for a "girly" tone) **
+            lol = await message.reply_text("💖 Hii cutiepie {}! 💖".format(message.from_user.mention))
+            await asyncio.sleep(0.2)
+            await lol.edit_text("✨ Welcome to my cozy little corner, sweetie! ✨".format(message.from_user.mention))
+            await asyncio.sleep(0.2)
+            await lol.edit_text("🌸 Let's make some magic with music! 🌸".format(message.from_user.mention))
+            await asyncio.sleep(0.2)
+            await lol.edit_text("💅 Ready to slay with some tunes? 💅".format(message.from_user.mention))
+            await asyncio.sleep(0.2)
+            await lol.edit_text("💋 Kisses and good vibes only! 💋".format(message.from_user.mention))
+            await asyncio.sleep(0.2)
+            await lol.edit_text("🎀 So happy you're here, hun! 🎀".format(message.from_user.mention))
+            await asyncio.sleep(0.2)
+            await lol.delete()
             
-            for i, phrase in enumerate(welcome_phrases):
-                progress = (i+1)*25
-                await anim.edit_text(
-                    f"{NEON_GRADIENTS[i%4]}\n"
-                    f"{phrase}\n"
-                    f"{generate_loading_bar(progress)} {progress}%\n"
-                    f"{NEON_GRADIENTS[i%4][::-1]}"
-                )
-                await asyncio.sleep(0.8)
+            # ** Starting Animation (Modified for a "girly" tone) **
+            lols = await message.reply_text("**💖 L**")
+            await asyncio.sleep(0.1)
+            await lols.edit_text("💖 Lo")        
+            await asyncio.sleep(0.1)
+            await lols.edit_text("**💖 Loa**")
+            await asyncio.sleep(0.1)
+            await lols.edit_text("**💖 Load**")
+            await asyncio.sleep(0.1)
+            await lols.edit_text("**💖 Loadi**")
+            await asyncio.sleep(0.1)
+            await lols.edit_text("**💖 Loadin**")
+            await asyncio.sleep(0.1)
+            await lols.edit_text("**💖 Loading**")
+            await asyncio.sleep(0.1)
+            await lols.edit_text("**💖 Loading.**")
+            await asyncio.sleep(0.1) 
+            await lols.edit_text("**💖 Loading....**")
+            await asyncio.sleep(0.1)
+            await lols.edit_text("**💖 Loading.**")
+            await asyncio.sleep(0.1)
+            await lols.edit_text("**💖 Loading....**")
+            await asyncio.sleep(0.5)
             
-            # ✧ BOOT ANIMATION ✧
-            boot_steps = [
-                "⚡️ 𝐈𝐧𝐢𝐭𝐢𝐚𝐥𝐢𝐳𝐢𝐧𝐠 𝐒𝐲𝐬𝐭𝐞𝐦...",
-                "🎛️ 𝐋𝐨𝐚𝐝𝐢𝐧𝐠 𝐀𝐮𝐝𝐢𝐨 𝐌𝐨𝐝𝐮𝐥𝐞𝐬...",
-                "📡 𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐢𝐧𝐠 𝐓𝐨 𝐒𝐞𝐫𝐯𝐞𝐫𝐬...",
-                "🔊 𝐓𝐞𝐬𝐭𝐢𝐧𝐠 𝐀𝐮𝐝𝐢𝐨 𝐐𝐮𝐚𝐥𝐢𝐭𝐲...",
-                f"✅ 𝐑𝐞𝐚𝐝𝐲 𝐓𝐨 𝐑𝐨𝐜𝐤, {message.from_user.mention}!"
-            ]
+            await lols.delete()
             
-            for step in boot_steps:
-                await anim.edit_text(
-                    f"╔════════════════════╗\n"
-                    f"       🎶 {step}\n"
-                    f"╚════════════════════╝"
-                )
-                await asyncio.sleep(1.0)
+            # ** Hardcoded Sticker (As per user's previous request) **
+            m = await message.reply_sticker("CAACAgUAAxkBAAEQI1BlTLmx7PtOO3aPNshEU2gCy7iAFgACNQUAApqMuVeA6eJ50VbvmDME")
+            await asyncio.sleep(0.5)
             
             userss_photo = None
             if message.chat.photo:
@@ -250,27 +261,25 @@ async def ultra_start_pm(client, message: Message, _):
             print(f"Error during private start sequence: {e}")
             chat_photo = config.START_IMG_URL
 
-        await anim.delete()
-        
-        # ✧ FINAL GOODBYE STICKER ✧
+        # ** 4. Final Goodbye Sticker (Kept as previously, for consistency if desired) **
         try:
             await message.reply_sticker(random.choice(ULTRA_STICKERS))
         except Exception as e:
             print(f"Failed to send goodbye sticker: {e}")
         
-        # ✧ FINAL MESSAGE ✧
+        # ✧ FINAL MESSAGE (Modified for a "girly" tone) ✧
         await message.reply_photo(
             photo=chat_photo,
             caption=f"""
 ╔════════════════════════╗
        🎧 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 𝐌𝐔𝐒𝐈𝐂 🎧
 ╠════════════════════════╣
-✨ 𝐇𝐞𝐲 {message.from_user.mention},
-🌟 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐓𝐨 {app.mention}
+✨ Hiii, {message.from_user.mention}!
+💖 Welcome to your ultimate music experience with {app.mention}!
 
-🎶 𝐔𝐥𝐭𝐫𝐚 𝐇𝐢𝐠𝐡 𝐐𝐮𝐚𝐥𝐢𝐭𝐲 𝐀𝐮𝐝𝐢𝐨
-🔥 𝟐𝟒/𝟕 𝐕𝐨𝐢𝐜𝐞𝐜𝐡𝐚𝐭 𝐒𝐮𝐩𝐩𝐨𝐫𝐭
-💫 𝐒𝐦𝐨𝐨𝐭𝐡 𝐏𝐥𝐚𝐲𝐛𝐚𝐜𝐤
+🎶 Get ready for super high-quality audio
+🌸 I'm here 24/7 to make sure your party never stops!
+💫 Enjoy the smoothest music playback ever!
 
 ╠════════════════════════╣
        {random.choice(NEON_GRADIENTS)}
@@ -316,9 +325,9 @@ async def ultra_start_gp(client, message: Message, _):
 ╔════════════════════╗
        🎵 {app.mention} 🎵
 ╠════════════════════╣
-⏳ 𝐔𝐩𝐭𝐢𝐦𝐞: {get_readable_time(uptime)}
-🌟 𝐒𝐭𝐚𝐭𝐮𝐬: 𝐎𝐧𝐥𝐢𝐧𝐞
-💫 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲: {config.MUSIC_BOT_NAME}
+⏳ Uptime: {get_readable_time(uptime)}
+🌟 Status: Online and fabulous!
+💫 Powered By: {config.MUSIC_BOT_NAME} - Your ultimate music companion!
 
 ╠════════════════════╣
        {random.choice(NEON_GRADIENTS)}
@@ -365,7 +374,7 @@ async def ultra_welcome(client, message: Message):
                 # ✧ GROUP WELCOME ANIMATION ✧
                 anim = await message.reply_text("🎵")
                 for i in range(1, 6):
-                    await anim.edit_text("\n".join(["🎵" + "•"*i*2 + "🎶" for _ in range(3)]))
+                    await anim.edit_text("\n".join(["💖" + "🎶"*i*2 + "✨" for _ in range(3)])) # Changed emojis
                     await asyncio.sleep(0.3)
                 
                 await anim.delete()
@@ -380,13 +389,13 @@ async def ultra_welcome(client, message: Message):
                     photo=config.START_IMG_URL,
                     caption=f"""
 ╔════════════════════╗
-       🌟 𝐓𝐇𝐀𝐍𝐊𝐒! 🌟
+       🌟 𝐓𝐇𝐀𝐍𝐊𝐒, 𝐇𝐔𝐍! 🌟
 ╠════════════════════╣
-💫 𝐓𝐡𝐚𝐧𝐤𝐬 𝐟𝐨𝐫 𝐚𝐝𝐝𝐢𝐧𝐠 𝐦𝐞 𝐭𝐨:
+💫 Thanks for adding me to your awesome group, sweetie:
 ✨ {message.chat.title}
 
-🎶 𝐈'm {app.mention}, a premium music bot!
-🔥 𝐏𝐥𝐚𝐲 𝐡𝐢𝐠𝐡 𝐪𝐮𝐚𝐥𝐢𝐭𝐲 𝐦𝐮𝐬𝐢𝐜 𝟐𝟒/𝟕
+🎶 I'm {app.mention}, your fabulous premium music bot!
+💖 I'm here to play high-quality music 24/7, let's party!
 
 ╠════════════════════╣
        {random.choice(NEON_GRADIENTS)}
