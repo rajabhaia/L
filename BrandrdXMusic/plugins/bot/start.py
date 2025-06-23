@@ -41,7 +41,10 @@ NEON_GRADIENTS = [
     "⚡️🎶🔥💫🌟✨"
 ]
 
-MUSIC_EMOJIS = ["🎵", "🎶", "🎧", "🎼", "🎤", "🎹", "🥁", "🎷", "🎺", "🎸", "🪕", "🎻"]
+# Updated MUSIC_EMOJIS with commonly supported Telegram reactions
+# A comprehensive list of supported reactions can be found in Telegram's API documentation or by testing
+# These are commonly known to work
+MUSIC_EMOJIS = ["👍", "❤️", "😂", "🥳", "🙏", "🤩", "🎉", "🔥", "💯", "🥰", "👏", "😁"]
 
 # ✧✧✧ ANIMATION SEQUENCES ✧✧✧
 def generate_loading_bar(progress):
@@ -72,10 +75,27 @@ async def ultra_start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     
     # ✧ ULTRA REACTION ANIMATION ✧
-    for emoji in random.sample(MUSIC_EMOJIS, 3):
-        await message.react(emoji)
-        await asyncio.sleep(0.2)
+    # Ensure these emojis are valid Telegram reactions
+    valid_reactions = ["👍", "❤️", "😂", "🥳", "🤩", "🎉", "🔥", "💯", "🥰"] # Subset of commonly valid reactions
     
+    # Check if MUSIC_EMOJIS has at least 3 valid reactions before sampling
+    if len(valid_reactions) >= 3:
+        for emoji in random.sample(valid_reactions, 3):
+            try:
+                await message.react(emoji)
+                await asyncio.sleep(0.2)
+            except Exception as e:
+                print(f"Failed to react with {emoji}: {e}")
+                # You might want to log this or handle it more gracefully
+                # e.g., fall back to a default reaction or skip if reaction fails
+    else:
+        # Fallback if there aren't enough valid reactions
+        try:
+            await message.react("👍") # Default reaction
+        except Exception as e:
+            print(f"Failed to react with default 👍: {e}")
+
+
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
@@ -172,7 +192,7 @@ async def ultra_start_pm(client, message: Message, _):
                 f"✨ 𝐇𝐞𝐲 𝐁𝐚𝐛𝐲 {message.from_user.mention}",
                 f"🌟 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐓𝐨 {app.mention}",
                 f"💫 𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐌𝐮𝐬𝐢𝐜 𝐄𝐱𝐩𝐞𝐫𝐢𝐞𝐧𝐜𝐞",
-                f"🔥 𝐋𝐞𝐭'𝐬 𝐑𝐨𝐜𝐤 𝐓𝐡𝐞 𝐂𝐡𝐚𝐭"
+                f"🔥 𝐋𝐞𝐭's 𝐑𝐨𝐜𝐤 𝐓𝐡𝐞 𝐂𝐡𝐚𝐭"
             ]
             
             for i, phrase in enumerate(welcome_phrases):
@@ -195,9 +215,12 @@ async def ultra_start_pm(client, message: Message, _):
             ]
             
             for step in boot_steps:
+                # Ensure the emoji chosen for the boot animation is a valid reaction or a simple string
+                # Since this is edit_text, it doesn't need to be a reaction emoji.
+                # Using a generic music emoji or a simple symbol here.
                 await anim.edit_text(
                     f"╔════════════════════╗\n"
-                    f"       {random.choice(MUSIC_EMOJIS)} {step}\n"
+                    f"       🎶 {step}\n"  # Changed from random.choice(MUSIC_EMOJIS) to a fixed 🎶
                     f"╚════════════════════╝"
                 )
                 await asyncio.sleep(0.7)
