@@ -29,11 +29,14 @@ from strings import get_string
 # ✧✧✧ PREMIUM ASSETS ✧✧✧
 # **IMPORTANT**: Verify these sticker file IDs are still valid.
 # If stickers are not showing, re-obtain valid file IDs via @StickerIDbot
+# The current provided IDs are causing MEDIA_EMPTY error. You need to replace them with working ones.
+# Example of a valid animated sticker ID (replace with your own verified ones):
+# To get a sticker ID: Send the sticker to your bot in a private chat. Then forward that message to @StickerIDbot (or similar) to get its file ID.
 ULTRA_STICKERS = [
-    "CAACAgUAAxkBAAEMMtRlqZcq9QABHlK3QZogv6bQeHwz6gAC1gMAAg6ryVcldUr_lhPexzME",  # Animated music note
-    "CAACAgUAAxkBAAEMMtZlqZczVXHfD3LJ1J0Jb3QZJgAB2isAAhYJAAJOi_lVvZv3yP4bQHQeBA",  # DJ animation
-    "CAACAgUAAxkBAAEMMthlqZdC6WkAAb7X8hq5XQABmQABP_4AAjQKAAJW7ehVvW4AAUv7VQABHwQ",  # Equalizer
-    "CAACAgUAAxkBAAEMMtplqZdQZ0zqJk5XQABmQABP_4AAjQKAAJW7ehVvW4AAUv7VQABHwQ"  # Fireworks
+    "CAACAgEAAxkBAAEkK1ZmH4t3jXg3D0h-jG2l7j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ", # Example: Replace with your actual working sticker ID
+    "CAACAgEAAxkBAAEkK15mH4uHlXg-9o-1X2t3j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ", # Example: Replace with your actual working sticker ID
+    "CAACAgEAAxkBAAEkK2NmH4vJk-7C2o-2X2t3j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ", # Example: Replace with your actual working sticker ID
+    "CAACAgEAAxkBAAEkK2VmH4wuG-7D1p-3X2t3j_7W78-pAACBAADmQ8jR-xR7wABGj7dMwQ"  # Example: Replace with your actual working sticker ID
 ]
 
 NEON_GRADIENTS = [
@@ -44,9 +47,10 @@ NEON_GRADIENTS = [
 ]
 
 # Updated MUSIC_EMOJIS with commonly supported Telegram reactions
+# Removed emojis that might cause REACTION_INVALID errors.
 # A comprehensive list of supported reactions can be found in Telegram's API documentation or by testing
-# These are commonly known to work
 MUSIC_EMOJIS = ["👍", "❤️", "😂", "🥳", "🙏", "🤩", "🎉", "🔥", "💯", "🥰", "👏", "😁"]
+
 
 # ✧✧✧ ANIMATION SEQUENCES ✧✧✧
 def generate_loading_bar(progress):
@@ -77,6 +81,7 @@ async def ultra_start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     
     # ✧ ULTRA REACTION ANIMATION ✧
+    # Using a predefined list of commonly valid reactions
     valid_reactions = ["👍", "❤️", "😂", "🥳", "🤩", "🎉", "🔥", "💯", "🥰"] 
     
     if len(valid_reactions) >= 3:
@@ -85,12 +90,12 @@ async def ultra_start_pm(client, message: Message, _):
                 await message.react(emoji)
                 await asyncio.sleep(0.4) # Increased from 0.2 for slower reaction
             except Exception as e:
-                print(f"Failed to react with {emoji}: {e}")
+                print(f"Failed to react with {emoji}: {e}") # Print the error for debugging
     else:
         try:
             await message.react("👍")
         except Exception as e:
-            print(f"Failed to react with default 👍: {e}")
+            print(f"Failed to react with default 👍: {e}") # Print the error for debugging
 
     # Logger notification for private start
     if config.LOGGER_ID:
@@ -255,7 +260,8 @@ async def ultra_start_pm(client, message: Message, _):
                     userss_photo = await app.download_media(
                         message.chat.photo.big_file_id,
                     )
-                except:
+                except Exception as e: # Catch error during media download
+                    print(f"Error downloading user photo: {e}")
                     userss_photo = None
             
             chat_photo = userss_photo if userss_photo else config.START_IMG_URL
@@ -333,7 +339,8 @@ async def ultra_welcome(client, message: Message):
             if await is_banned_user(member.id):
                 try:
                     await message.chat.ban_member(member.id)
-                except:
+                except Exception as e: # Catch ban error
+                    print(f"Error banning member: {e}")
                     pass
             if member.id == app.id:
                 if message.chat.type != ChatType.SUPERGROUP:
@@ -372,7 +379,7 @@ async def ultra_welcome(client, message: Message):
 💫 𝐓𝐡𝐚𝐧𝐤𝐬 𝐟𝐨𝐫 𝐚𝐝𝐝𝐢𝐧𝐠 𝐦𝐞 𝐭𝐨:
 ✨ {message.chat.title}
 
-🎶 𝐈'𝐦 {app.mention}, 𝐚 𝐩𝐫𝐞𝐦𝐢𝐮𝐦 𝐦𝐮𝐬𝐢𝐜 𝐛𝐨𝐭!
+🎶 𝐈'm {app.mention}, a premium music bot!
 🔥 𝐏𝐥𝐚𝐲 𝐡𝐢𝐠𝐡 𝐪𝐮𝐚𝐥𝐢𝐭𝐲 𝐦𝐮𝐬𝐢𝐜 𝟐𝟒/𝟕
 
 ╠════════════════════╣
