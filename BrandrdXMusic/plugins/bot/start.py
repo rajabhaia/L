@@ -24,8 +24,10 @@ from strings import get_string
 
 # --- NEW STICKER FILE IDS (Ensure these are valid sticker file IDs) ---
 # Replace these with your desired sticker file IDs
-WELCOME_STICKER_1 = "CAACAgUAAxkBAALBCGhfXUH8zndHHxaVBqFzwsTQvc8SAAKHBAACWJnBV4oO23c_ciMEHgQ"
-STARTING_STICKER_1 = "CAACAgUAAxkBAALBDWhfXWP-s97rb5UBaM5H2qENUsx-AAKhBQAC01ToVJMdqKKVm9x1HgQ"
+WELCOME_STICKER_1 = "CAACAgUAAxkBAAOCaF9fCsXJ1xxSVuDB864OCRfjXPMAAqEFAALTVOhUkx2oopWb3HUeBA"
+WELCOME_STICKER_2 = "CAACAgUAAxkBAAOCaF9fCsXJ1xxSVuDB864OCRfjXPMAAqEFAALTVOhUkx2oopWb3HUeBA"
+STARTING_STICKER_1 = "CAACAgUAAxkBAAODaF9fCwH1U3853rlI7T5hJQ4JK8cAAk4FAAKd1NlU3Np8RGo3ELIeBA"
+STARTING_STICKER_2 = "CAACAgUAAxkBAAODaF9fCwH1U3853rlI7T5hJQ4JK8cAAk4FAAKd1NlU3Np8RGo3ELIeBA"
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
@@ -40,9 +42,10 @@ async def start_pm(client, message: Message, _):
         if name[0:4] == "help":
             keyboard = help_pannel(_)
             try:
+                # Send WELCOME_STICKER_2 if help is requested
                 await message.reply_sticker(WELCOME_STICKER_2)
             except Exception as e:
-                print(f"Error sending WELCOME_STICKER_2: {e}")
+                print(f"Error sending WELCOME_STICKER_2 in help: {e}")
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
@@ -57,7 +60,7 @@ async def start_pm(client, message: Message, _):
                 )
             return
         if name[0:3] == "inf":
-            m = await message.reply_text("🔍 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠...")
+            m = await message.reply_text("🔍 𝐒𝐞𝐚𝐫�𝐡𝐢𝐧𝐠...")
             query = (str(name)).replace("info_", "", 1)
             query = f"[https://www.youtube.com/watch?v=](https://www.youtube.com/watch?v=){query}"
             from youtubesearchpython.__future__ import VideosSearch
@@ -112,13 +115,21 @@ async def start_pm(client, message: Message, _):
             lol = await message.reply_text(welcome_messages[0].format(message.from_user.mention))
             for i in range(1, len(welcome_messages)):
                 await asyncio.sleep(0.2) # Slower animation for better readability
-                await lol.edit_text(welcome_messages[i].format(message.from_user.mention))
+                await lol.edit_te toxt(welcome_messages[i].format(message.from_user.mention))
             await asyncio.sleep(0.5) # Pause before starting animation
             await lol.delete() # Delete the animated welcome message
 
+            # --- Send STARTING_STICKER_2 before text animation starts ---
+            sticker_msg = None
+            try:
+                sticker_msg = await message.reply_sticker(STARTING_STICKER_2)
+            except Exception as e:
+                print(f"Error sending STARTING_STICKER_2: {e}")
+                # You might want to log this error or notify yourself if stickers consistently fail
+
             # --- Dynamic Starting Text Animation with stylish touch ---
             starting_messages = [
-                "⚡️ ᴘʀᴇᴘᴀʀɪɴɢ...",
+                "⚡️ ᴘʀᴏᴄᴇssɪɴɢ...",
                 "🎶 ʟᴏᴀᴅɪɴɢ ᴍᴜsɪᴄ ᴇɴɢɪɴᴇ...",
                 "🚀 ʙᴏᴏᴛɪɴɢ sʏsᴛᴇᴍs...",
                 "✅ ᴀʟᴍᴏsᴛ ᴛʜᴇʀᴇ...",
@@ -132,12 +143,10 @@ async def start_pm(client, message: Message, _):
 
             await asyncio.sleep(0.3) # Pause after starting animation
 
-            # --- Changed Sticker for starting animation ---
-            m = None
-            try:
-                m = await message.reply_sticker(STARTING_STICKER_2) # Using the new sticker ID
-            except Exception as e:
-                print(f"Error sending STARTING_STICKER_2: {e}")
+            # Delete the text animation message, but keep the sticker if it was sent successfully
+            await lols.delete()
+            # If the sticker was sent, it will remain visible until the final photo/caption is sent.
+            # No explicit deletion of sticker_msg here to keep it visible longer.
 
             userss_photo = None
             if message.chat.photo:
@@ -157,14 +166,19 @@ async def start_pm(client, message: Message, _):
             print(f"An unexpected error occurred during start_pm: {e}")
             chat_photo = config.START_IMG_URL # Fallback in case of any other error
 
-        await lols.delete()
-        if m:
-            await m.delete()
         await message.reply_photo(
             photo=chat_photo,
             caption=_["start_2"].format(message.from_user.mention, app.mention),
             reply_markup=InlineKeyboardMarkup(out),
         )
+        # Now delete the sticker message after the main photo is sent, if it was sent.
+        if sticker_msg:
+            try:
+                await sticker_msg.delete()
+            except Exception as e:
+                print(f"Error deleting sticker message: {e}")
+
+
         if await is_on_off(config.LOG):
             sender_id = message.from_user.id
             sender_name = message.from_user.first_name
@@ -247,4 +261,4 @@ async def get_sticker_id(client, message: Message):
         await message.reply_text(
             "Please reply to a sticker with `/stickerid` or send a sticker with this command as caption to get its ID."
         )
-
+�
