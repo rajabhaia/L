@@ -22,29 +22,26 @@ from BrandrdXMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
-# --- NEW STICKER FILE IDS (Ensure these are valid sticker file IDs) ---
+# --- NEW STICKER FILE IDS ---
 # Replace these with your desired sticker file IDs
-WELCOME_STICKER_1 = "CAACAgUAAxkBAAODaF9fCwH1U3853rlI7T5hJQ4JK8cAAk4FAAKd1NlU3Np8RGo3ELIeBA"
-WELCOME_STICKER_2 = "CAACAgUAAxkBAAODaF9fCwH1U3853rlI7T5hJQ4JK8cAAk4FAAKd1NlU3Np8RGo3ELIeBA"
-STARTING_STICKER_1 = "CAACAgUAAxkBAALBDWhfXWP-s97rb5UBaM5H2qENUsx-AAKhBQAC01ToVJMdqKKVm9x1HgQ"
-STARTING_STICKER_2 = "CAACAgUAAxkBAALBDWhfXWP-s97rb5UBaM5H2qENUsx-AAKhBQAC01ToVJMdqKKVm9x1HgQ"
+WELCOME_STICKER_1 = "CAACAgUAAxkBAAEQI1RlTLnRAy4h9lOS6jgS5FYsQoruOAAC1gMAAg6ryVcldUr_lhPexzME" # Example existing, replace with yours
+WELCOME_STICKER_2 = "CAACAgUAAxkBAAKktGhZgVvKBcruKFO1vrlyJyJ92u0BAAIPCQACSErxVkH9JWQPmfaoHgQ" # Placeholder, replace with actual
+STARTING_STICKER_1 = "CAACAgUAAxkBAAKkw2hZgbt8t_FQU38s_k_8RZR3gsIiAAINFgAC0QyQVrqrLQzU13foHgQ" # Example existing, replace with yours
+STARTING_STICKER_2 = "CAACAgUAAxkBAAKkyGhZghOqGIGtgP5HkY1Nyk_vfugyAAJ5CgACQgZwVTVo2eQqCh15HgQ" # Placeholder, replace with actual
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-    # Dynamic reaction based on user's preference or a random choice
-    reactions = ["🥰", "💖", "✨", "🚀", "🎶"]
-    await message.react(reactions[0]) # You can randomize this if you wish
-
+    # FIX: Changed `await message.react("")` to a valid emoji.
+    # You can choose any single valid emoji here, for example: "❤️", "👍", "✨", "🔥", "🎶"
+    await message.react("🥰") # या अपनी पसंद का कोई और इमोजी चुनें
+    
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            try:
-                await message.reply_sticker(WELCOME_STICKER_2)
-            except Exception as e:
-                print(f"Error sending WELCOME_STICKER_2: {e}")
+            await message.reply_sticker(WELCOME_STICKER_2) 
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
@@ -55,11 +52,11 @@ async def start_pm(client, message: Message, _):
             if await is_on_off(2):
                 return await app.send_message(
                     chat_id=config.LOGGER_ID,
-                    text=f"✨ {message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n👤 <b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n🔖 <b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
             return
         if name[0:3] == "inf":
-            m = await message.reply_text("🔍 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠...")
+            m = await message.reply_text("🔎")
             query = (str(name)).replace("info_", "", 1)
             query = f"[https://www.youtube.com/watch?v=](https://www.youtube.com/watch?v=){query}"
             from youtubesearchpython.__future__ import VideosSearch
@@ -94,53 +91,49 @@ async def start_pm(client, message: Message, _):
             if await is_on_off(2):
                 return await app.send_message(
                     chat_id=config.LOGGER_ID,
-                    text=f"🎵 {message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n👤 <b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n🔖 <b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
     else:
         try:
             out = private_panel(_)
-
-            # --- Enhanced Welcome Animation with more flair ---
+            
+            # --- Enhanced Welcome Animation ---
             welcome_messages = [
-                "💫 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ︎ {}. . . ✨",
-                "✨ 𝐇𝐞𝐥𝐥𝐨, 𝐒𝐰𝐞𝐞𝐭𝐡𝐞𝐚𝐫𝐭! ꨄ︎ {}. . . 🥳",
-                "💖 𝐆𝐥𝐚𝐝 𝐭𝐨 𝐬𝐞𝐞 𝐲𝐨𝐮, {}. . . 🎉",
-                "🚀 𝐆𝐞𝐭 𝐫𝐞𝐚𝐝𝐲 𝐭𝐨 𝐣𝐚𝐦, {}. . . 🎶",
-                "🌟 𝐄𝐧𝐣𝐨𝐲 𝐭𝐡𝐞 𝐦𝐮𝐬𝐢𝐜, {}. . . 🤩",
-                "💞 𝐒𝐢𝐭 𝐛𝐚𝐜𝐤 𝐚𝐧𝐝 𝐫𝐞𝐥𝐚𝐱, {}. . . 🥰",
+                "💫 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ︎ {}.. ❣️",
+                "✨ 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🥳",
+                "🎉 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💥",
+                "🌟 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🤩",
+                "💖 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💌",
+                "💞 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🥰",
+                "🎶 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. Enjoy!",
             ]
-
+            
             # Send initial welcome message and animate
             lol = await message.reply_text(welcome_messages[0].format(message.from_user.mention))
             for i in range(1, len(welcome_messages)):
-                await asyncio.sleep(0.2) # Slower animation for better readability
+                await asyncio.sleep(0.15) # Slower animation for better readability
                 await lol.edit_text(welcome_messages[i].format(message.from_user.mention))
+            
             await asyncio.sleep(0.5) # Pause before starting animation
             await lol.delete() # Delete the animated welcome message
 
-            # --- Dynamic Starting Text Animation with stylish touch ---
+            # --- Dynamic Starting Text Animation ---
             starting_messages = [
-                "⚡️ ᴘʀᴇᴘᴀʀɪɴɢ...",
-                "🎶 ʟᴏᴀᴅɪɴɢ ᴍᴜsɪᴄ ᴇɴɢɪɴᴇ...",
-                "🚀 ʙᴏᴏᴛɪɴɢ sʏsᴛᴇᴍs...",
-                "✅ ᴀʟᴍᴏsᴛ ᴛʜᴇʀᴇ...",
-                "🌟 𝐑𝐞𝐚𝐝𝐲 𝐭𝐨 𝐏𝐥𝐚𝐲! 🎵"
+                "⚡️ѕ", "⚡️ѕт", "⚡️ѕтα", "⚡️ѕтαя", "⚡️ѕтαят", "⚡️ѕтαятι", "⚡️ѕтαятιи", "⚡️ѕтαятιиg",
+                "⚡️ѕтαятιиg.", "⚡️ѕтαятιиg..", "⚡️ѕтαятιиg...", "⚡️ѕтαятιиg....",
+                "🎵 𝙻𝚘𝚊𝚍𝚒𝚗𝚐 𝙿𝚕𝚊𝚢𝚕𝚒𝚜𝚝𝚜...", "🚀 𝙱𝚘𝚘𝚝𝚒𝚗𝚐 𝚂𝚢𝚜𝚝𝚎𝚖𝚜...", "✅ 𝚁𝚎𝚊𝚍𝚢 𝚝𝚘 𝚁𝚘𝚌𝚔!"
             ]
-
+            
             lols = await message.reply_text(starting_messages[0])
             for i in range(1, len(starting_messages)):
-                await asyncio.sleep(0.2) # Slightly slower for more impact
+                await asyncio.sleep(0.15) # Slightly slower for more impact
                 await lols.edit_text(starting_messages[i])
 
-            await asyncio.sleep(0.3) # Pause after starting animation
+            await asyncio.sleep(0.10) # Pause after starting animation
 
             # --- Changed Sticker for starting animation ---
-            m = None
-            try:
-                m = await message.reply_sticker(STARTING_STICKER_2) # Using the new sticker ID
-            except Exception as e:
-                print(f"Error sending STARTING_STICKER_2: {e}")
-
+            m = await message.reply_sticker(STARTING_STICKER_2) # Using the new sticker ID
+            
             userss_photo = None
             if message.chat.photo:
                 try:
@@ -150,18 +143,14 @@ async def start_pm(client, message: Message, _):
                 except Exception as e:
                     print(f"Error downloading chat photo: {e}")
                     userss_photo = None # Fallback if download fails
-
+            
             chat_photo = userss_photo if userss_photo else config.START_IMG_URL # Use config.START_IMG_URL for global default
 
         except AttributeError:
             chat_photo = config.START_IMG_URL # Ensure it falls back to the configured URL
-        except Exception as e:
-            print(f"An unexpected error occurred during start_pm: {e}")
-            chat_photo = config.START_IMG_URL # Fallback in case of any other error
 
         await lols.delete()
-        if m:
-            await m.delete()
+        await m.delete()
         await message.reply_photo(
             photo=chat_photo,
             caption=_["start_2"].format(message.from_user.mention, app.mention),
@@ -172,7 +161,7 @@ async def start_pm(client, message: Message, _):
             sender_name = message.from_user.first_name
             return await app.send_message(
                 config.LOG_GROUP_ID,
-                f"🚀 {message.from_user.mention} ʜᴀs sᴛᴀʀᴛᴇᴅ ʙᴏᴛ.\n\n**👤 ᴜsᴇʀ ɪᴅ :** {sender_id}\n**🔖 ᴜsᴇʀ ɴᴀᴍᴇ:** {sender_name}",
+                f"{message.from_user.mention} ʜᴀs sᴛᴀʀᴛᴇᴅ ʙᴏᴛ. \n\n**ᴜsᴇʀ ɪᴅ :** {sender_id}\n**ᴜsᴇʀ ɴᴀᴍᴇ:** {sender_name}",
             )
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
@@ -197,17 +186,19 @@ async def welcome(client, message: Message):
             if await is_banned_user(member.id):
                 try:
                     await message.chat.ban_member(member.id)
-                except Exception as e:
-                    print(f"Error banning user: {e}")
+                except:
                     pass
             if member.id == app.id:
                 if message.chat.type != ChatType.SUPERGROUP:
-                    await message.reply_text("🚫 This bot works best in supergroups! Please add me to a supergroup for full functionality. 🚀")
+                    await message.reply_text(_["start_4"])
                     return await app.leave_chat(message.chat.id)
                 if message.chat.id in await blacklisted_chats():
                     await message.reply_text(
-                        "🚨 This chat is blacklisted! Please contact support for more information. "
-                        f"Support Chat: {config.SUPPORT_CHAT}",
+                        _["start_5"].format(
+                            app.mention,
+                            f"[https://t.me/](https://t.me/){app.username}?start=sudolist",
+                            config.SUPPORT_CHAT,
+                        ),
                         disable_web_page_preview=True,
                     )
                     return await app.leave_chat(message.chat.id)
@@ -226,27 +217,5 @@ async def welcome(client, message: Message):
                 await add_served_chat(message.chat.id)
                 await message.stop_propagation()
         except Exception as ex:
-            print(f"Error in new_chat_members handler: {ex}")
-
-# --- New Sticker ID Function ---
-@app.on_message(filters.command(["stickerid", "stid"]))
-async def get_sticker_id(client, message: Message):
-    sticker_file_id = None
-
-    # Check if the message is a reply to a sticker
-    if message.reply_to_message and message.reply_to_message.sticker:
-        sticker_file_id = message.reply_to_message.sticker.file_id
-        await message.reply_text(
-            f"Sticker ID: \n`{sticker_file_id}`\n\n_You can use this ID in your bot's code!_"
-        )
-    # Check if the message itself contains a sticker (if the command was used as a caption)
-    elif message.sticker:
-        sticker_file_id = message.sticker.file_id
-        await message.reply_text(
-            f"Sticker ID: \n`{sticker_file_id}`\n\n_You can use this ID in your bot's code!_"
-        )
-    else:
-        await message.reply_text(
-            "Please reply to a sticker with `/stickerid` or send a sticker with this command as caption to get its ID."
-        )
+            print(ex)
 
