@@ -23,7 +23,7 @@ DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 900))
 
 # Chat id of a group for logging bot's activities
 LOGGER_ID = int(getenv("LOGGER_ID", None))
-
+LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", None))
 # Get this value from @BRANDRD_ROBOT on Telegram by /id
 OWNER_ID = int(getenv("OWNER_ID", "7218474237"))
 
@@ -44,7 +44,14 @@ GIT_TOKEN = getenv(
 
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/aajabetaaaja")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/RAJAmusic67")
+# config.py
 
+SUDO_USERS = [
+    123456789,  # Replace with your Telegram User ID
+    987654321,  # Replace with other sudo user IDs if any
+]
+
+# ... other configurations ...
 # Set this to True if you want the assistant to automatically leave chats after an interval
 AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", False))
 
