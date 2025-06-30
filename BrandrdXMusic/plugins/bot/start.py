@@ -108,7 +108,7 @@ async def start_pm(client, message: Message, _):
             await asyncio.sleep(0.1)
             await lols.edit_text("**⚡ѕтαят**")
             await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятι**")
+            await lols.edit_text("**⚡ѕтαяι**")
             await asyncio.sleep(0.1)
             await lols.edit_text("**⚡ѕтαятιи**")
             await asyncio.sleep(0.1)
@@ -280,49 +280,64 @@ async def show_keyboard(client, message: Message, _):
         reply_markup=keyboard,
     )
 
-@app.on_message(filters.command("post") & ~BANNED_USERS)
-@LanguageStart
-async def post_with_keyboard(client, message: Message, _):
+@app.on_message(filters.command("custompost") & filters.user(SUDO_USERS)) # Restrict to SUDO_USERS
+async def custom_post_with_keyboard(client, message: Message):
     """
-    Ek formatted post inline keyboard ke saath bhejta hai.
+    Ek custom formatted post inline keyboard ke saath bhejta hai.
+    Command format: /custompost <photo_url> | <caption_text> | <group_button_text> | <group_url> | <channel_button_text> | <channel_url>
+    Example: /custompost https://example.com/image.jpg | This is a test post. | My Group | https://t.me/my_group | My Channel | https://t.me/my_channel
     """
-    # --- Post ka Content ---
-    # Aap yahan photo aur caption ko badal sakte hain
-    photo_url = config.START_IMG_URL # Maujooda start image ka upyog kar rahe hain
-    caption_text = (
-        "✨ **Yeh ek Sample Post Hai!** ✨\n\n"
-        "Aap yahan koi bhi promotional ya informational text likh sakte hain. "
-        "Yeh **Markdown** aur *HTML* formatting ko support karta hai.\n\n"
-        "Adhik updates ke liye hamara channel join karein!"
-    )
+    if len(message.command) < 2:
+        return await message.reply_text(
+            "Usage: `/custompost <photo_url> | <caption_text> | <group_button_text> | <group_url> | <channel_button_text> | <channel_url>`"
+            "\nExample: `/custompost https://example.com/image.jpg | This is a test post. | My Group | https://t.me/my_group | My Channel | https://t.me/my_channel`"
+        )
+
+    try:
+        # Split the command arguments by '|'
+        parts = message.text.split(" ", 1)[1].split("|")
+        if len(parts) != 6:
+            return await message.reply_text(
+                "Invalid format. Please use: `<photo_url> | <caption_text> | <group_button_text> | <group_url> | <channel_button_text> | <channel_url>`"
+            )
+
+        photo_url = parts[0].strip()
+        caption_text = parts[1].strip()
+        group_button_text = parts[2].strip()
+        group_url = parts[3].strip()
+        channel_button_text = parts[4].strip()
+        channel_url = parts[5].strip()
+
+    except IndexError:
+        return await message.reply_text("Invalid command format.")
 
     # --- Inline Keyboard ---
     keyboard = InlineKeyboardMarkup(
         [
-            # Pehli Row
+            # Pehli Row (Group Button)
             [
                 InlineKeyboardButton(
-                    text="Official Channel",
-                    url=config.SUPPORT_CHAT # Udaharan URL
+                    text=group_button_text,
+                    url=group_url
                 ),
             ],
-            # Doosri Row
+            # Doosri Row (Channel Button)
             [
                 InlineKeyboardButton(
-                    text="Button 1",
-                    callback_data="post_button_1"
-                ),
-                InlineKeyboardButton(
-                    text="Button 2",
-                    callback_data="post_button_2"
+                    text=channel_button_text,
+                    url=channel_url
                 )
             ]
         ]
     )
 
     # --- Post Bhejna ---
-    await message.reply_photo(
-        photo=photo_url,
-        caption=caption_text,
-        reply_markup=keyboard,
-    )
+    try:
+        await message.reply_photo(
+            photo=photo_url,
+            caption=caption_text,
+            reply_markup=keyboard,
+        )
+        await message.reply_text("Custom post sent successfully!")
+    except Exception as e:
+        await message.reply_text(f"Failed to send custom post: `{e}`")
