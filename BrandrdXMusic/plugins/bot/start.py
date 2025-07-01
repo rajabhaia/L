@@ -23,7 +23,7 @@ from BrandrdXMusic.utils.database import (
 from BrandrdXMusic.utils.decorators.language import LanguageStart
 from BrandrdXMusic.utils.formatters import get_readable_time
 from BrandrdXMusic.utils.inline import help_pannel, private_panel, start_panel
-from config import BANNED_USERS, SUDO_USERS # Make sure to define SUDO_USERS in your config.py
+from config import BANNED_USERS, SUDO_USERS  # Make sure to define SUDO_USERS in your config.py
 from strings import get_string
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
@@ -112,9 +112,9 @@ async def start_pm(client, message: Message, _):
             await asyncio.sleep(0.1)
             await lols.edit_text("**⚡ѕтαятιи**")
             await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg**")
+            await lols.edit_text("**⚡ѕтαяιиg**")
             await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg.**")
+            await lols.edit_text("**⚡ѕтαяιиg.**")
 
             await lols.edit_text("**⚡ѕтαятιиg....**")
 
@@ -296,20 +296,27 @@ async def custom_post_with_keyboard(client, message: Message):
     try:
         # Split the command arguments by '|'
         parts = message.text.split(" ", 1)[1].split("|")
+        
+        # Strip whitespace from each part immediately after splitting
+        parts = [p.strip() for p in parts]
+
         if len(parts) != 6:
             return await message.reply_text(
                 "Invalid format. Please use: `<photo_url> | <caption_text> | <group_button_text> | <group_url> | <channel_button_text> | <channel_url>`"
             )
 
-        photo_url = parts[0].strip()
-        caption_text = parts[1].strip()
-        group_button_text = parts[2].strip()
-        group_url = parts[3].strip()
-        channel_button_text = parts[4].strip()
-        channel_url = parts[5].strip()
+        photo_url = parts[0]
+        caption_text = parts[1]
+        group_button_text = parts[2]
+        group_url = parts[3]
+        channel_button_text = parts[4]
+        channel_url = parts[5]
 
     except IndexError:
         return await message.reply_text("Invalid command format.")
+    except Exception as e:
+        # Catch any other parsing errors and report them
+        return await message.reply_text(f"An error occurred during parsing: `{e}`")
 
     # --- Inline Keyboard ---
     keyboard = InlineKeyboardMarkup(
@@ -340,4 +347,5 @@ async def custom_post_with_keyboard(client, message: Message):
         )
         await message.reply_text("Custom post sent successfully!")
     except Exception as e:
-        await message.reply_text(f"Failed to send custom post: `{e}`")
+        # Provide a more detailed error message
+        await message.reply_text(f"Failed to send custom post: `{e}`\n\n**Possible reasons:**\n- Invalid Photo URL\n- Bot does not have permission to send photos\n- URL is not accessible")
