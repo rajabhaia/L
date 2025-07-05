@@ -23,9 +23,6 @@ from BrandrdXMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
-# █▀▀ █▀█ █▄░█ █▀▀ █ █▄░█ █▀▀   █▀▀ █░█ ▄▀█ █▀█ █▀▀ █▀▄▀█
-# █▄▄ █▄█ █░▀█ █▄▄ █ █░▀█ █▄█   █▄▄ █▀█ █▀█ █▀▄ ██▄ █░▀░█
-
 # ✧✧✧ PREMIUM ASSETS ✧✧✧
 ULTRA_STICKERS = [
     "CAACAgUAAxkBAAEQI1RlTLnRAy4h9lOS6jgS5FYsQoruOAAC1gMAAg6ryVcldUr_lhPexzME",
@@ -62,21 +59,16 @@ async def music_visualizer(message):
         await asyncio.sleep(0.45)
     return anim
 
-# █▀ █▀▀ █▀█ █▀▀ █▀▀ █▄░█ █▀ █░█ █▀█ ▀█▀
-# ▄█ █▄▄ █▀▄ ██▄ ██▄ █░▀█ ▄█ █▀█ █▄█ ░█░
-
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def ultra_start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     
-    # ✧ FIRST WELCOME STICKER ✧
     try:
         await message.reply_sticker(random.choice(ULTRA_STICKERS))
     except Exception as e:
         print(f"Failed to send welcome sticker: {e}")
     
-    # ✧ ULTRA REACTION ANIMATION ✧
     valid_reactions = ["👍", "❤️", "🔥", "🎉", "👏"]
     
     if len(valid_reactions) >= 3:
@@ -87,7 +79,6 @@ async def ultra_start_pm(client, message: Message, _):
             except Exception as e:
                 print(f"Failed to react with {emoji}: {e}")
 
-    # Logger notification
     if config.LOGGER_ID:
         try:
             await app.send_message(
@@ -198,9 +189,6 @@ async def ultra_start_pm(client, message: Message, _):
         try:
             out = private_panel(_)
             
-            # ** 1. Initial Sticker (Already handled at the start of ultra_start_pm) **
-            
-            # ** Dynamic Welcome Animation (Modified for a "girly" tone) **
             lol = await message.reply_text("💖 Hii cutiepie {}! 💖".format(message.from_user.mention))
             await asyncio.sleep(0.2)
             await lol.edit_text("✨ Welcome to my cozy little corner, sweetie! ✨".format(message.from_user.mention))
@@ -215,7 +203,6 @@ async def ultra_start_pm(client, message: Message, _):
             await asyncio.sleep(0.2)
             await lol.delete()
             
-            # ** Starting Animation (Modified for a "girly" tone) **
             lols = await message.reply_text("**💖 L**")
             await asyncio.sleep(0.1)
             await lols.edit_text("💖 Lo")        
@@ -241,7 +228,6 @@ async def ultra_start_pm(client, message: Message, _):
             
             await lols.delete()
             
-            # ** Hardcoded Sticker (As per user's previous request) **
             m = await message.reply_sticker("CAACAgUAAxkBAAEQI1BlTLmx7PtOO3aPNshEU2gCy7iAFgACNQUAApqMuVeA6eJ50VbvmDME")
             await asyncio.sleep(0.5)
             
@@ -261,13 +247,11 @@ async def ultra_start_pm(client, message: Message, _):
             print(f"Error during private start sequence: {e}")
             chat_photo = config.START_IMG_URL
 
-        # ** 4. Final Goodbye Sticker (Kept as previously, for consistency if desired) **
         try:
             await message.reply_sticker(random.choice(ULTRA_STICKERS))
         except Exception as e:
             print(f"Failed to send goodbye sticker: {e}")
         
-        # ✧ FINAL MESSAGE (Modified for a "girly" tone) ✧
         await message.reply_photo(
             photo=chat_photo,
             caption=f"""
@@ -288,22 +272,17 @@ async def ultra_start_pm(client, message: Message, _):
             reply_markup=InlineKeyboardMarkup(out),
         )
 
-# █▀▀ █▀█ █▄░█ █▀▀   █▄▀ █▀▀ █▄█ █▄▄ █▀▀ █▀█
-# █▄▄ █▄█ █░▀█ █▄▄   █░█ ██▄ ░█░ █▄█ ██▄ █▀▄
-
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def ultra_start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
     
-    # ✧ FIRST GROUP STICKER ✧
     try:
         await message.reply_sticker(random.choice(ULTRA_STICKERS))
     except Exception as e:
         print(f"Failed to send group welcome sticker: {e}")
     
-    # ✧ GROUP START ANIMATION ✧
     anim = await message.reply_text("🚀")
     for i in range(5):
         await anim.edit_text("🚀" + "•"*(i+1) + " "*(4-i) + f"{20*(i+1)}%")
@@ -313,7 +292,6 @@ async def ultra_start_gp(client, message: Message, _):
     await asyncio.sleep(0.8)
     await anim.delete()
     
-    # ✧ FINAL GROUP STICKER ✧
     try:
         await message.reply_sticker(random.choice(ULTRA_STICKERS))
     except Exception as e:
@@ -365,13 +343,11 @@ async def ultra_welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
-                # ✧ FIRST WELCOME STICKER ✧
                 try:
                     await message.reply_sticker(random.choice(ULTRA_STICKERS))
                 except Exception as e:
                     print(f"Failed to send group welcome sticker: {e}")
                 
-                # ✧ GROUP WELCOME ANIMATION ✧
                 anim = await message.reply_text("🎵")
                 for i in range(1, 6):
                     await anim.edit_text("\n".join(["💖" + "🎶"*i*2 + "✨" for _ in range(3)])) # Changed emojis
@@ -379,7 +355,6 @@ async def ultra_welcome(client, message: Message):
                 
                 await anim.delete()
                 
-                # ✧ FINAL WELCOME STICKER ✧
                 try:
                     await message.reply_sticker(random.choice(ULTRA_STICKERS))
                 except Exception as e:
