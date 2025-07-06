@@ -13,7 +13,6 @@ from BrandrdXMusic.utils.database import get_banned_users, get_gbanned
 from config import BANNED_USERS
 
 
-
 async def init():
     if (
         not config.STRING1
@@ -44,7 +43,7 @@ async def init():
         await Hotty.stream_call("https://graph.org/file/e999c40cb700e7c684b75.mp4")
     except NoActiveGroupCall:
         LOGGER("BrandrdXMusic").error(
-            "Please turn on the videochat of your log group/channel.\n\nStopping Bot..."
+            "Please turn on the videochat of your log group\channel.\n\nStopping Bot..."
         )
         exit()
     except:
@@ -53,16 +52,6 @@ async def init():
     LOGGER("BrandrdXMusic").info(
         "ᴅʀᴏᴘ ʏᴏᴜʀ ɢɪʀʟꜰʀɪᴇɴᴅ'ꜱ ɴᴜᴍʙᴇʀ ᴀᴛ @BRANDED_PAID_CC ᴊᴏɪɴ @BRANDRD_BOT , @BRANDED_WORLD ꜰᴏʀ ᴀɴʏ ɪꜱꜱᴜᴇꜱ"
     )
-
-    # Clone kiye gaye bots ko start karne ke liye code
-    try:
-        from BrandrdXMusic.plugins.admins.clone import load_all_clones
-        await load_all_clones()
-        LOGGER("BrandrdXMusic").info("All Cloned Bots Started Successfully.")
-    except Exception as e:
-        LOGGER("BrandrdXMusic").error(f"An error occurred while starting clones: {e}")
-
-
     await idle()
     await app.stop()
     await userbot.stop()
