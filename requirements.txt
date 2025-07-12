@@ -26,7 +26,7 @@ qrcode
 pytz
 future==1.0.0
 search_engine_parser
-py-tgcalls==0.9.7
+py-tgcalls==2.2.5
 pykeyboard
 pyshorteners
 python-dotenv
